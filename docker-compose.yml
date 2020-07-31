@@ -1,0 +1,26 @@
+version: "3"
+
+volumes:
+    clamav-data:
+    clamav-sock:
+
+services: 
+    clamav:
+        build: 
+            context: .
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        volumes: 
+            - clamav-data:/var/lib/clamav
+            - clamav-sock:/run/clamav
+        depends_on: 
+            - freshclam
+    
+    freshclam:
+        build: 
+            context: .
+            dockerfile: Dockerfile
+        command: ["freshclam"]
+        volumes: 
+            - clamav-data:/var/lib/clamav
+            - clamav-sock:/run/clamav:ro
