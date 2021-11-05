@@ -14,7 +14,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag resoglas/clamav:latest
-    - name: Push the Docker image
-      run: docker push resoglas/clamav:latest
+    - name: Log in to Docker Hub
+      uses: docker/login-action
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Build and push Docker image
+      uses: docker/build-push-action
+      with:
+        context: .
+        push: true
+        tags: latest
