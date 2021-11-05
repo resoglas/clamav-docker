@@ -15,5 +15,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-    - run: docker build . --file Dockerfile --tag resoglas/clamav:latest
-    - run: docker push resoglas/clamav:latest
+      run: docker build . --file Dockerfile --tag resoglas/clamav:latest
+    - name: Push the Docker image
+      run: docker push resoglas/clamav:latest
